@@ -1,6 +1,6 @@
 # Uncomment the required imports before adding the code
 
-from django.shortcuts import render
+#from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
@@ -63,8 +63,8 @@ def registration(request):
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except:
-        # If not, simply log this is a new user
+    except Exception as e:
+        print(f"Error: {e}")
         logger.debug("{} is new user".format(username))
 
     # If it is a new user
@@ -84,13 +84,6 @@ def registration(request):
     else:
         data = {"userName": username, "error": "Already Registered"}
         return JsonResponse(data)
-
-
-# # Update the `get_dealerships` view to render the index page with
-# a list of dealerships
-# def get_dealerships(request):
-# ...
-# Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
 
 
 # Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
@@ -160,12 +153,11 @@ def add_review(request):
         try:
             response = post_review(data)
             return JsonResponse({"status": 200})
-        except:
+        except Exception as e:
+            print(f"Error: {e}")
             return JsonResponse({"status": 401, "message": "Error in posting review"})
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
-
-    # Create a `get_cars` view to render a list of all cars
 
 
 def get_cars(request):
