@@ -47,9 +47,6 @@ def logout_request(request):
     return JsonResponse(data)
 
 
-# ...
-
-
 # Create a `registration` view to handle sign up request
 # COPIATA DA LAB
 @csrf_exempt
@@ -96,7 +93,8 @@ def registration(request):
         return JsonResponse(data)
 
 
-# Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+# Update the `get_dealerships` render list of dealerships all by default, 
+# particular state if state is passed
 def get_dealerships(request, state="All"):
     if state == "All":
         endpoint = "/fetchDealers"
@@ -124,8 +122,12 @@ def get_dealers(request):
                     }
                 )
         else:
-            return JsonResponse({"status": 400,
-            "message": "Unable to fetch dealers"})
+            return JsonResponse(
+                {
+                    "status": 400,
+                    "message": "Unable to fetch dealers"
+                }
+            )
     except Exception as e:
         logger.error(f"Error fetching dealers: {e}")
         return JsonResponse(
@@ -136,15 +138,13 @@ def get_dealers(request):
         )
 
 
-# Create a `get_dealer_reviews` view to render the reviews of a dealer
-# def get_dealer_reviews(request,dealer_id):
-# ...
 def get_dealer_reviews(request, dealer_id):
     if dealer_id:
         # Definisci l'endpoint per ottenere le recensioni del dealer
         # POTREBBE ESSERE DA MODIFICARE IN str(dealer_id)
         endpoint = f"/fetchReviews/dealer/{dealer_id}"
-        reviews = get_request(endpoint)  # Chiamata al microservizio per le recensioni
+        reviews = get_request(endpoint)  
+        # Chiamata al microservizio per le recensioni
 
         # Analizza i sentimenti di ciascuna recensione
         for review in reviews:
@@ -152,7 +152,7 @@ def get_dealer_reviews(request, dealer_id):
                 review.get("review")
             )
             review["sentiment"] = (
-                sentiment  # Aggiungi il sentimento al dizionario della recensione
+                sentiment
             )
 
         return JsonResponse(
