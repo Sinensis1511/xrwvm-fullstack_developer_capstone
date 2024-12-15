@@ -93,7 +93,7 @@ def registration(request):
         return JsonResponse(data)
 
 
-# Update the `get_dealerships` render list of dealerships all by default, 
+# Update the `get_dealerships` render list of dealerships all by default,
 # particular state if state is passed
 def get_dealerships(request, state="All"):
     if state == "All":
@@ -143,7 +143,7 @@ def get_dealer_reviews(request, dealer_id):
         # Definisci l'endpoint per ottenere le recensioni del dealer
         # POTREBBE ESSERE DA MODIFICARE IN str(dealer_id)
         endpoint = f"/fetchReviews/dealer/{dealer_id}"
-        reviews = get_request(endpoint)  
+        reviews = get_request(endpoint)
         # Chiamata al microservizio per le recensioni
 
         # Analizza i sentimenti di ciascuna recensione
