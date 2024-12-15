@@ -83,12 +83,16 @@ def registration(request):
         )
         # Login the user and redirect to list page
         login(request, user)
-        data = {"userName": username,
-        "status": "Authenticated"}
+        data = {
+            "userName": username,
+            "status": "Authenticated"
+        }
         return JsonResponse(data)
     else:
-        data = {"userName": username, "error":
-        "Already Registered"}
+        data = {
+            "userName": username, "error":
+            "Already Registered"
+        }
         return JsonResponse(data)
 
 
@@ -144,7 +148,9 @@ def get_dealer_reviews(request, dealer_id):
 
         # Analizza i sentimenti di ciascuna recensione
         for review in reviews:
-            sentiment = analyze_review_sentiments(review.get("review"))
+            sentiment = analyze_review_sentiments(
+                review.get("review")
+            )
             review["sentiment"] = (
                 sentiment  # Aggiungi il sentimento al dizionario della recensione
             )
@@ -171,8 +177,12 @@ def get_dealer_details(request, dealer_id):
     if dealer_id:
         endpoint = "/fetchDealer/" + str(dealer_id)
         dealership = get_request(endpoint)
-        return JsonResponse({"status": 200,
-        "dealer": dealership})
+        return JsonResponse(
+            {
+                "status": 200,
+                "dealer": dealership
+            }
+        )
     else:
         return JsonResponse(
             {
@@ -186,10 +196,10 @@ def get_dealer_details(request, dealer_id):
 # def add_review(request):
 # ...
 def add_review(request):
-    if request.user.is_anonymous == False:
-        data = json.loads(request.body)
+    if request.user.is_anonymous is False:
+        # data = json.loads(request.body)
         try:
-            #response = post_review(data)
+            # response = post_review(data)
             return JsonResponse(
                 {
                     "status": 200
